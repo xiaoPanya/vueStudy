@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+  </head>
+  <body>
+    <!-- 
+        axios是根据xhr和promise封装的一个http库(插件)
+        http请求 包括普通http请求和ajax请求
+        今后我们用来发生ajax请求最多的工具就是 axios
+        引入后向我们暴露的是一个函数
+        axios是函数也是函数对象
+        两种用法
+        axios() 函数
+        axios.get() 函数对象的用法
+
+        请求方式:一般普通的http请求就是get和post
+            ajax请求 get post delete put
+    
+        项目几乎都是前后端分离
+            前端做前端(搭页面,做交互(请求获取数据展示渲染))      
+            后端做后端(数据库的储存操作,接口的书写,服务器的部署)
+
+        restful Api接口规范 是现在目前最流行的书写后端接口的一个规范
+        资源化
+        每个数据会被看做是一个资源(商品)对于每一个资源来说操作数据库有四个情况 增 删 改 查 
+          后端人员对数据的每个操作,对应前端人员ajax的4个请求
+          ajax
+            get      调用接口 查找数据资源
+            post     调用接口 添加数据资源
+            put      调用接口 修改数据资源
+            delete   调用接口 删除数据资源
+
+ 
+        axios掌握的好不好  关键是三个参数分的清不清
+          params          参数是路径的一部分,而且这个参数只能是url路径中出现
+          query           这个参数叫查询参数,这个参数可以出现在url当中,也可以在配置项中配置,query不属于路径的一部分
+                          url的 ? 后面    key=value & key=value 
+                          在配置项中叫params    
+          body请求体参数
+                        通常在post和put当中,只能在配置对象当中配置
+                          data当中的配置对象就是你body当中的请求体参数 这个数据必须是一个对象 
+                          data: { title:'123' },
+       -->
+    <script>
+      axios({
+        method: 'get',
+        /* 
+          URL是  统一资源定位        
+            代表的是 协议  ip   端口     路径(可以包含Params参数)   ?  参数 (query参数)
+            https----协议://api.github.com:80-----ip和端口默认:80端口/search/repositories--->路径?  q=v&sort=stars--->参数
+        */
+        // url: 'https://api.github.com/search/repositories?q=v&sort=stars',
+        url: 'https://api.github.com/search/repositories', //url
+        params: {
+          q: 'v',
+          sort: 'stars'
+        }
+      })
+        .then(response => {
+          console.log(response)
+          console.log(response.data)
+        })
+        .catch(reason => {
+          console.log(reason)
+        })
+
+      // 如果是对象的方法请求方式是对象的方法名,第一个参数代表url(params和query都直接写在url当中)
+      // 如果有body请求体参数,post和put 第二个参数代表的是请求体参数
+      // get delete 第二个参数不是请求体参数 (代表的是一个配置对象)
+      /*  axios.get('https://api.github.com/search/repositories?q=v&sort=stars')
+      axios.get('https://api.github.com/search/repositories?q=v&sort=stars', { 请求体参数 }) */
+    </script>
+  </body>
+</html>
